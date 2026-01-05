@@ -1,0 +1,493 @@
+/* ========================================= */
+/* 1. SETUP & VARIABLES                      */
+/* ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+  --bg-dark: #020403;
+  --bg-panel: #0a120c;
+  --primary: #10b981;   /* Emerald Neon */
+  --primary-glow: rgba(16, 185, 129, 0.4);
+  --accent: #059669;    /* Darker Green */
+  --text-main: #ffffff;
+  --text-dim: #9ca3af;
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --nav-height: 80px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ========================================= */
+/* 2. ANIMATIONS                             */
+/* ========================================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 var(--primary-glow); }
+  70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Helper Classes for Animations */
+.animate-up {
+  opacity: 0;
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+
+/* Scroll Reveal Animation */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  will-change: opacity, transform;
+}
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ========================================= */
+/* 3. NAVIGATION                             */
+/* ========================================= */
+nav {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  height: var(--nav-height);
+  padding: 0 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(2, 4, 3, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.nav-logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-links { display: flex; gap: 2.5rem; }
+
+.nav-links a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+  position: relative;
+}
+
+.nav-links a:hover, .nav-links .active-link {
+  color: var(--primary);
+  opacity: 1;
+}
+
+.nav-links .active-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 0; width: 100%; height: 2px;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+}
+
+/* Mobile Menu Button (Hidden on Desktop) */
+.mobile-menu-btn {
+  display: none;
+  background: none; border: none; cursor: pointer;
+  flex-direction: column; gap: 6px;
+}
+.mobile-menu-btn span {
+  display: block; width: 30px; height: 3px; background: white; border-radius: 3px;
+}
+
+/* ========================================= */
+/* 4. HOME PAGE (HERO & SECTIONS)            */
+/* ========================================= */
+
+/* Hero Video Section */
+.hero-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -1;
+  filter: brightness(0.35) contrast(1.1); /* Cinematic Dark Look */
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 2;
+  max-width: 1000px;
+  padding: 0 20px;
+}
+
+.hero-title {
+  font-size: 5.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(180deg, #fff 0%, #a7f3d0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.hero-desc {
+  font-size: 1.3rem;
+  color: #e5e7eb;
+  margin-bottom: 3rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+.btn-glow {
+  padding: 1.2rem 3.5rem;
+  font-size: 1.1rem;
+  background: var(--primary);
+  color: #020403;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.btn-glow:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.6);
+  background: #34d399;
+}
+
+/* "How It Works" Section */
+.info-section {
+  padding: 8rem 2rem;
+  background: var(--bg-dark);
+  text-align: center;
+}
+
+.section-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 4rem auto 0;
+}
+
+.step-card {
+  background: var(--glass);
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  transition: transform 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.step-card:hover { 
+  transform: translateY(-10px); 
+  border-color: var(--primary); 
+  background: rgba(255,255,255,0.05);
+}
+
+.step-number {
+  font-size: 5rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.03);
+  position: absolute;
+  top: -10px; right: 20px;
+}
+
+/* "Mission" Section */
+.mission-section {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  padding: 8rem 10%;
+  background: linear-gradient(180deg, #020403 0%, #08100b 100%);
+}
+.mission-text { flex: 1; }
+.mission-image { 
+  flex: 1; height: 450px; 
+  border-radius: 20px; overflow: hidden; 
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.mission-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.mission-image:hover img { transform: scale(1.05); }
+
+/* "Tech Stack" Section */
+.tech-section {
+  padding: 5rem 2rem;
+  text-align: center;
+  background: #000;
+  border-top: 1px solid #111;
+}
+.tech-icons {
+  display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; flex-wrap: wrap;
+}
+.tech-badge {
+  background: #0a0a0a;
+  padding: 12px 25px;
+  border-radius: 8px;
+  border: 1px solid #222;
+  font-weight: 600;
+  color: var(--text-dim);
+  transition: 0.3s;
+}
+.tech-badge:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ========================================= */
+/* 5. DASHBOARD & FEATURES PAGES             */
+/* ========================================= */
+.page-container {
+  padding: calc(var(--nav-height) + 40px) 2rem 4rem;
+  min-height: 100vh;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.video-frame {
+  background: #000;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 16/9;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+.live-badge {
+  position: absolute; top: 20px; left: 20px;
+  background: rgba(220, 38, 38, 0.9);
+  color: white; padding: 6px 16px;
+  border-radius: 30px; font-weight: 700; font-size: 0.8rem;
+  animation: pulseGlow 2s infinite; z-index: 10;
+}
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2rem;
+  height: 100%;
+}
+
+.stat-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* ========================================= */
+/* 6. MOBILE RESPONSIVE CSS                  */
+/* ========================================= */
+@media (max-width: 900px) {
+  
+  /* Navbar Mobile */
+  nav { padding: 0 1.5rem; height: 70px; }
+  .mobile-menu-btn { display: flex; z-index: 1002; }
+  
+  .nav-links {
+    position: fixed; top: 0; right: 0;
+    width: 70%; height: 100vh;
+    background: #0a0f0c;
+    flex-direction: column;
+    justify-content: center; align-items: center;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 1px solid var(--glass-border);
+    padding-top: 60px;
+  }
+  
+  /* You will need JS to toggle a class .nav-open on the body or nav to show this */
+  .nav-open .nav-links { transform: translateX(0); }
+
+  /* Typography Scaling */
+  .hero-title { font-size: 3rem; }
+  .section-title { font-size: 2.2rem; }
+  .step-number { font-size: 4rem; }
+
+  /* Layout Stacking */
+  .hero-container { height: auto; min-height: 85vh; padding-top: 80px; }
+  .mission-section { flex-direction: column; padding: 4rem 1.5rem; gap: 3rem; }
+  .mission-image { height: 300px; width: 100%; }
+  
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .video-frame { height: 300px; }
+  
+  .steps-grid { grid-template-columns: 1fr; }
+  
+  /* Spacing */
+  .page-container { padding: 100px 1.5rem 2rem; }
+}
+
+/* ========================================= */
+/* --- NEW FEATURES PAGE STYLES --- */
+/* ========================================= */
+
+.features-section {
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 5rem;
+  padding-top: 2rem;
+}
+
+.features-header h2 {
+  font-size: 3.5rem;
+  background: linear-gradient(to right, #fff, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.features-header p {
+  color: var(--text-dim);
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* THE GRID */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  padding: 1rem;
+}
+
+/* THE CARD DESIGN */
+.feature-card {
+  position: relative;
+  background: rgba(10, 20, 15, 0.4); /* Darker, slightly green tint */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  backdrop-filter: blur(10px);
+}
+
+/* Hover Effect: Lift & Glow */
+.feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(10, 20, 15, 0.8);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.2);
+}
+
+/* The Glowing Icon Container */
+.icon-wrapper {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--primary);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.feature-card:hover .icon-wrapper {
+  transform: scale(1.1) rotate(5deg);
+  background: var(--primary);
+  color: #000;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+}
+
+/* Typography */
+.feature-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.feature-card p {
+  color: #9ca3af;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* Decorative background blur blob for effect */
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(16,185,129,0.05) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+/* Mobile Tweak */
+@media (max-width: 768px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .features-header h2 { font-size: 2.5rem; }
+}
